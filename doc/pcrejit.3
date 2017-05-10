@@ -56,7 +56,9 @@ API that is JIT-specific.
 If your program may sometimes be linked with versions of PCRE that are older
 than 8.20, but you want to use JIT when it is available, you can test
 the values of PCRE_MAJOR and PCRE_MINOR, or the existence of a JIT macro such
-as PCRE_CONFIG_JIT, for compile-time control of your code.
+as PCRE_CONFIG_JIT, for compile-time control of your code. Also beware that the
+\fBpcre_jit_exec()\fP function was not available before 8.32. See "JIT
+FAST PATH API" section below for details.
 .
 .
 .SH "SIMPLE USE OF JIT"
@@ -404,6 +406,12 @@ fast path, and if invalid data is passed, the result is undefined.
 .P
 Bypassing the sanity checks and the \fBpcre_exec()\fP wrapping can give
 speedups of more than 10%.
+.P
+The \fBpcre_jit_exec()\fP function is not available in versions of
+PCRE before 8.32 (released in November 2012). If you need to support
+versions that old you need to either use the slower \fBpcre_exec()\fP,
+or switch between the two codepaths with by checking the values of
+PCRE_MAJOR and PCRE_MINOR.
 .
 .
 .SH "SEE ALSO"
